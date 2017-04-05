@@ -41,7 +41,6 @@
             <input type="hidden" name="mobile" id="jsInpResetMobil"/>
             <input id="jsSetNewPwdBtn" type="button" value="提交"/>
         </div>
-        <input type='hidden' name='csrfmiddlewaretoken' value='mymQDzHWl2REXIfPMg2mJaLqDfaS1sD5'/>
         {% csrf_token %}
     </form>
 </div>
@@ -53,7 +52,7 @@
             <ul class="fr hd-bar">
                 <li>服务电话：<span>33333333</span></li>
                 <li><a href="login.html">[登录]</a></li>
-                <li class="active"><a href="/forgetpwd/">[忘记密码]</a></li>
+                <li class="active"><a href="{% url 'forget_pwd' %}">[忘记密码]</a></li>
             </ul>
         </div>
     </div>
