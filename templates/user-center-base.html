@@ -24,8 +24,6 @@
                 <div class="wp">
                     <div class="fl"><p>服务电话：<b>33333333</b></p></div>
                     <!--登录后跳转-->
-
-
                     {% if request.user.is_authenticated %}
                         <div class="personal">
                             <dl class="user fr">
@@ -81,7 +79,7 @@
         <div class="wp">
             <ul class="crumbs">
                 <li><a href="{% url 'index' %}">首页</a>></li>
-                <li><a href="/user/home/">个人中心</a>></li>
+                <li><a href="{% url 'users:user_info' %}">个人中心</a>></li>
                 <li>我的收藏</li>
             </ul>
         </div>
@@ -92,10 +90,10 @@
     <div class="wp list personal_list">
         <div class="left">
             <ul>
-                <li class="active2"><a href="{% url 'users:user_info' %}">个人资料</a></li>
-                <li><a href="{% url 'users:my_course' %}">我的课程</a></li>
-                <li><a href="{% url 'users:my_fav_org' %}">我的收藏</a></li>
-                <li>
+                <li {% ifequal current_page '' %}class="active2"{% endifequal %}><a href="{% url 'users:user_info' %}">个人资料</a></li>
+                <li {% ifequal current_page 'my_course' %}class="active2"{% endifequal %}><a href="{% url 'users:my_course' %}">我的课程</a></li>
+                <li {% ifequal current_page 'my_fav_org' %}class="active2"{% endifequal %}><a href="{% url 'users:my_fav_org' %}">我的收藏</a></li>
+                <li {% ifequal current_page 'my_message' %}class="active2"{% endifequal %}>
                     <a href="{% url 'users:my_message' %}" style="position: relative;">
                         我的消息
                     </a>
@@ -103,63 +101,7 @@
             </ul>
         </div>
 
-        {% block right_content %}
-            <div class="right">
-                <div class="personal_des Releasecont">
-                    <div class="head">
-                        <h1>我的收藏</h1>
-                    </div>
-                </div>
-                <div class="personal_des permessage">
-                    <div class="head">
-                        <ul class="tab_header messagehead">
-                            <li><a href="usercenter-fav-course.html">课程机构</a></li>
-                            <li><a href="usercenter-fav-teacher.html">授课教师 </a></li>
-                            <li class="active"><a href="usercenter-fav-course.html">公开课程</a></li>
-                        </ul>
-
-                    </div>
-                    <div class="companycenter">
-                        <div class="group_list brief">
-
-                            <div class="module1_5 box">
-                                <a href="course-detail.html">
-                                    <img width="214" height="190"
-                                         src="../media/courses/2016/12/57035ff200014b8a06000338-240-135_dHfj8Nq.jpg"/>
-                                </a>
-                                <div class="des">
-                                    <a href="course-detail.html"><h2>scrapy教程</h2></a>
-                                    <span class="fl">时长：<i class="key">55</i></span>
-                                    <span class="fr">学习人数：0</span>
-                                </div>
-                                <div class="bottom">
-                                    <span class="fl">北京大学</span>
-                                    <span class="delete-group fr jsDeleteFav_course" data-favid="12"></span>
-                                </div>
-                            </div>
-
-                            <div class="module1_5 box">
-                                <a href="course-detail.html">
-                                    <img width="214" height="190" src="../media/courses/2016/12/mysql.jpg"/>
-                                </a>
-                                <div class="des">
-                                    <a href="course-detail.html"><h2>xadmin进阶开发</h2></a>
-                                    <span class="fl">时长：<i class="key">30</i></span>
-                                    <span class="fr">学习人数：2</span>
-                                </div>
-                                <div class="bottom">
-                                    <span class="fl">慕课网</span>
-                                    <span class="delete-group fr jsDeleteFav_course" data-favid="13"></span>
-                                </div>
-                            </div>
-
-
-                        </div>
-                    </div>
-                </div>
-            </div>
-            </div>
-        {% endblock %}
+        {% block right_content %}{% endblock %}
 </section>
 
 
@@ -254,7 +196,7 @@
     </div>
     <div class="resetpassbox dialogbox" id="jsSetNewPwd">
         <h1>重新设置密码</h1>
-        <div class="close jsCloseDialog"><img src="../images/dig_close.png"/></div>
+        <div class="close jsCloseDialog"><img src="{% static 'images/dig_close.png' %}"/></div>
         <p class="green">请输入新密码</p>
         <form id="jsSetNewPwdForm">
             <div class="box">
@@ -274,7 +216,7 @@
                 <input type="hidden" name="mobile" id="jsInpResetMobil"/>
                 <input id="jsSetNewPwdBtn" type="button" value="提交"/>
             </div>
-            <input type='hidden' name='csrfmiddlewaretoken' value='DaP7IUKm9FA9nELA9YUlYYWpyIDdCiIP'/>
+            {% csrf_token %}
         </form>
     </div>
     <div class="forgetbox dialogbox">
@@ -301,6 +243,7 @@
                     <input type="hidden" name="sms_type" value="1">
                     <input id="jsFindPwdBtn" type="button" value="提交"/>
                 </div>
+                {% csrf_token %}
             </form>
         </div>
     </div>

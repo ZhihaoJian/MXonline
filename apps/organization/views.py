@@ -125,8 +125,20 @@ class OrgCourseView(View):
                 has_fav = True
         course_org = CourseOrg.objects.get(id=int(org_id))
         all_courses = course_org.course_set.all()
+
+        try:
+            page = request.GET.get('page', 1)
+        except PageNotAnInteger:
+            page = 1
+
+        # Provide Paginator with the request object for complete querystring generation
+
+        p = Paginator(all_courses, 5, request=request)
+
+        course = p.page(page)
+
         return render(request, 'org-detail-course.html', {
-            'all_courses': all_courses,
+            'all_courses': course,
             'course_org': course_org,
             'org_id': org_id,
             'current_page': current_page,

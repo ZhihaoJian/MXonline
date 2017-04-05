@@ -171,7 +171,7 @@ class UserInfoView(LoginRequiredMixin, View):
     """
 
     def get(self, request):
-        return render(request, 'usercenter-info.html', {})
+        return render(request, 'usercenter-info.html', {'current_page': ''})
 
     def post(self, request):
         user_info_form = UserInfoForm(request.POST, instance=request.user)
@@ -257,6 +257,7 @@ class MyCourseView(LoginRequiredMixin, View):
     def get(self, request):
         all_course = UserCourse.objects.filter(user=request.user)
         return render(request, 'usercenter-mycourse.html', {'all_course': all_course,
+                                                            'current_page': 'my_course',
                                                             })
 
 
@@ -274,6 +275,7 @@ class MyFavOrgView(LoginRequiredMixin, View):
             org_list.append(org)
         return render(request, 'usercenter-fav-org.html', {'all_fav_orgs': all_fav_orgs,
                                                            'org_list': org_list,
+                                                           'current_page': "my_fav_org",
                                                            })
 
 
@@ -336,6 +338,7 @@ class MyMessageView(LoginRequiredMixin, View):
         messages = p.page(page)
 
         return render(request, 'usercenter-message.html', {'all_messages': messages,
+                                                           'current_page': 'my_message',
                                                            })
 
 

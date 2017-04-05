@@ -22,9 +22,8 @@
 
             <div class="top">
                 <div class="wp">
-                    <div class="fl">
-                        <p>联系方式：<b>3333333333</b></p>
-                    </div>
+                    <div class="fl"><p>服务电话：<b>33333333</b></p></div>
+                    <!--登录后跳转-->
                     {% if request.user.is_authenticated %}
                         <div class="personal">
                             <dl class="user fr">
@@ -50,14 +49,16 @@
                             </div>
                         </div>
 
-                        <a href="{% url 'users:my_message' %}">
-                            <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
-                        </a>
 
                     {% else %}
                         <a style="color:white" class="fr registerbtn" href="{% url 'register' %}">注册</a>
                         <a style="color:white" class="fr loginbtn" href="{% url 'login' %}">登录</a>
                     {% endif %}
+                    <a href="{% url 'users:my_message' %}">
+                        <div class="msg-num"><span id="MsgNum">{{ request.user.get_unread_nums }}</span></div>
+                    </a>
+
+
                 </div>
             </div>
 
@@ -173,7 +174,7 @@
             score = $precision.attr('data-star-scope'),
             option = {
                 half: true,
-                path: '../images/',
+                path: '/static/images',
                 precision: true,
                 size: 24,
                 starOff: 'g_star.png',
